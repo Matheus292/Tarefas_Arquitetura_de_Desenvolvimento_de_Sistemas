@@ -37,6 +37,7 @@ public class EmpresaService
 		return dao.consultar( );
 	}
 	
+	
 	/**
 	 *Responsavel por consultar as empresas no banco de dados
 	 *@param cnpj
@@ -47,6 +48,7 @@ public class EmpresaService
 		EmpresaDAO dao = new EmpresaDAO( );
 		return dao.consultar( cnpj );
 	}
+	
 	
 	
 	/**
@@ -71,17 +73,5 @@ public class EmpresaService
 		return dao.excluir( empresa );
 	}
 	
-	
-	/**
-	 *Responsavel por excluir a empresa no banco de dados utilizando o cnpj
-	 *@param empresa
-	 *@return true,false
-	 */
-	
-   public boolean excluirPorCnpj( String cnpj ) throws SQLException
-   {
-      EmpresaDAO dao = new EmpresaDAO( );
-      return dao.excluirPorCnpj( cnpj );
-   }
 	
 }//Fim da Classe

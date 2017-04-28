@@ -28,7 +28,6 @@ public class ControleTemperaturaDAO
 	}
 
 	/**
-	 * 
 	 *Cadastra um novo controle de temperatura
 	 * @param controleTemperatura , empresa
 	 * @throws SQLException 
@@ -61,44 +60,6 @@ public class ControleTemperaturaDAO
 
 		return true;
 
-	}
-
-	/**
-	 *Metodo que serve para consultar os controles de temeperatura
-	 * @throws SQLException 
-	 *@ return lista
-	 */
-	public List<ControleTemperatura> consultar( ) throws SQLException
-	{
-		List<ControleTemperatura> controle = new ArrayList< >( );
-
-		ConnectionFactory fabricaConexao = new ConnectionFactory( );
-		Connection conexao = null;
-		ResultSet rs = null;
-		PreparedStatement st = null;
-
-		String sql = "select * from controletemperatura order by Empresa_Cnpj ASC";
-
-		conexao = fabricaConexao.obtemConexao( );				
-
-		st = conexao.prepareStatement( sql );
-		rs = st.executeQuery( );
-
-
-
-		while( rs.next( ) )
-		{
-			ControleTemperatura c = new ControleTemperatura( );
-			c.setId( rs.getInt( 1 ) );
-			c.setTemperaturaMaxima( rs.getShort( 2 ) );
-			c.setHorarioInicial( rs.getString( 3 ) );
-			c.setHorarioFinal( rs.getString( 4 ) );
-			controle.add( c );
-		}
-		st.close( );
-		conexao.close( );
-
-		return controle;
 	}
 	
 	
@@ -138,7 +99,45 @@ public class ControleTemperaturaDAO
 
 		return controle;
 	}
-	
+
+
+	/**
+	 *Metodo que serve para consultar os controles de temeperatura
+	 * @throws SQLException 
+	 *@ return lista
+	 */
+	public List<ControleTemperatura> consultar( ) throws SQLException
+	{
+		List<ControleTemperatura> controle = new ArrayList< >( );
+
+		ConnectionFactory fabricaConexao = new ConnectionFactory( );
+		Connection conexao = null;
+		ResultSet rs = null;
+		PreparedStatement st = null;
+
+		String sql = "select * from controletemperatura order by Empresa_Cnpj ASC";
+
+		conexao = fabricaConexao.obtemConexao( );				
+
+		st = conexao.prepareStatement( sql );
+		rs = st.executeQuery( );
+
+
+
+		while( rs.next( ) )
+		{
+			ControleTemperatura c = new ControleTemperatura( );
+			c.setId( rs.getInt( 1 ) );
+			c.setTemperaturaMaxima( rs.getShort( 2 ) );
+			c.setHorarioInicial( rs.getString( 3 ) );
+			c.setHorarioFinal( rs.getString( 4 ) );
+			controle.add( c );
+		}
+		st.close( );
+		conexao.close( );
+
+		return controle;
+	}
 
 	/**
 	 *Responsavel por alterar o controle de temperatura
@@ -209,31 +208,4 @@ public class ControleTemperaturaDAO
 
 			return true;
 	}
-	
-	public boolean excluir( String cnpj ) throws SQLException 
-	   {
-	      Connection conexao = null;
-	      ConnectionFactory banco = new ConnectionFactory( );
-	      String sql = "delete from ControleTemperatura where Empresa_cnpj = ?";
-	      PreparedStatement st = null;
-	   
-	      conexao = banco.obtemConexao( );
-	   
-	   		//Força a transação
-	      conexao.setAutoCommit( false );
-	   
-	      st = conexao.prepareStatement( sql );
-	   
-	      st.setString( 1  ,  cnpj );
-	      st.execute( );			
-	   
-	   		//Efetiva transação
-	      conexao.commit( );		
-	   
-	      st.close( );
-	      conexao.close( );
-	   
-	      return true;
-	   }
-	
 }//Fim da classe

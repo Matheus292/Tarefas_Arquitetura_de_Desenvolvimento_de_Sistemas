@@ -37,23 +37,8 @@ public class ControleTemperaturaService
 	public List<ControleTemperatura> consultar( ) throws SQLException
 	{
 		ControleTemperaturaDAO controle = new ControleTemperaturaDAO( );
-		return controle.consultar(  );
+		return controle.consultar( );
 	}
-	
-
-	/**
-	 *Metodo que serve para consultar o controle de temeperatura
-	 * @throws SQLException 
-	 * @param empresa
-	 * @return controle
-	 
-	 */
-	public ControleTemperatura consultar( Empresa empresa ) throws SQLException
-	{
-		ControleTemperaturaDAO controle = new ControleTemperaturaDAO( );
-		return controle.consultar( empresa );
-	}
-	
 	
 	/**
 	 *Responsavel por alterar o controle de temperatura
@@ -77,17 +62,19 @@ public class ControleTemperaturaService
 		ControleTemperaturaDAO dao = new ControleTemperaturaDAO( );
 		return dao.excluir( empresa );
 	}
+
 	
 	/**
-	 *Responsavel por excluir o controle de temperatura no banco de dados
-	 *@param controleTemperatura , empresa
-	 *@return true,false
+	 *Metodo que serve para consultar o controle de temeperatura
 	 * @throws SQLException 
+	 * @param empresa
+	 * @return controle
+	 
 	 */
-
-   public boolean excluir( String cnpj ) throws SQLException
-   {
-      ControleTemperaturaDAO dao = new ControleTemperaturaDAO( );
-      return dao.excluir( cnpj );
-   }
+	public ControleTemperatura consultar( Empresa empresa ) throws SQLException
+	{
+		ControleTemperaturaDAO controle = new ControleTemperaturaDAO( );
+		return controle.consultar( empresa );
+	}
+	
 }

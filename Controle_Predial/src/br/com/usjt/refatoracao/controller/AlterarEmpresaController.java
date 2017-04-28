@@ -20,27 +20,40 @@ import br.com.usjt.refatoracao.service.ControleTemperaturaService;
 import br.com.usjt.refatoracao.service.EmpresaService;
 
 /**
- * Servlet implementation class ManterEmpresaController
+ * Servlet implementation class AlterarEmpresaController
  */
 @WebServlet("/AlterarEmpresa.do")
-public class AlterarEmpresaController extends HttpServlet
-{
+public class AlterarEmpresaController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+     
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet( HttpServletRequest request , HttpServletResponse response ) throws ServletException, IOException 
-	{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
 		doPost( request , response );
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	protected void doPost( HttpServletRequest request , HttpServletResponse response ) throws ServletException , IOException
-	{	
+		
+		//Instancia os Java Beans
+		Empresa empresa = new Empresa( );
+		ControleTemperatura controle = new ControleTemperatura( );
+		Conjunto conjunto = new Conjunto( );
+
+
+		//Instancia os Services
+		EmpresaService servicoEmpresa = new EmpresaService( );
+		ControleTemperaturaService servicoControle = new ControleTemperaturaService( );
+		ConjuntoService servicoConjunto = new ConjuntoService( );
+
+		
+		
 		String cnpj = request.getParameter( "cnpj" );
 		String razao = request.getParameter( "razao" );
 		String endereco = request.getParameter( "endereco" );
@@ -52,10 +65,6 @@ public class AlterarEmpresaController extends HttpServlet
 		short temperatura = Short.parseShort( request.getParameter( "temperatura" ) );
 		String[ ] conj = request.getParameterValues( "CONJUNTO" );
 
-		RequestDispatcher dispatcher = null ;
-
-		//Instancia os Java Beans
-		Empresa empresa = new Empresa( );
 		empresa.setCnpj( cnpj );
 		empresa.setRazaoSocial( razao );
 		empresa.setEndereco( endereco );
@@ -63,51 +72,44 @@ public class AlterarEmpresaController extends HttpServlet
 		empresa.setHorarioAbertura( horarioInicial );
 		empresa.setHorarioFechamento( horarioFinal );
 
-		ControleTemperatura controle = new ControleTemperatura( );
 		controle.setTemperaturaMaxima( temperatura );
 		controle.setHorarioInicial( arHorarioInicial );
 		controle.setHorarioFinal( arHorarioFinal );
-
 
 		List< Conjunto > lista = new ArrayList< >( );
 
 		for( String x : conj )
 		{
-			Conjunto conjunto = new Conjunto( );
 
 			conjunto.setId( Integer.parseInt( x ) );
 			lista.add( conjunto );
 		}
 
 
-		//Instancia os Services
-		EmpresaService servicoEmpresa = new EmpresaService( );
-		ControleTemperaturaService servicoControle = new ControleTemperaturaService( );
-		ConjuntoService servicoConjunto = new ConjuntoService( );
 		
-		try 
+		try
 		{
+			List<Conjunto> lista1 = new ArrayList<>( );
+			Conjunto c = servicoConjunto.consultarConjuntoOcupado( empresa );
+			lista1.add( c ); 
+			
 			servicoEmpresa.alterar( empresa );
 			servicoControle.alterar( controle , empresa );
-			servicoConjunto.desocuparConjuntos( empresa.getCnpj( ) );
+
+			servicoConjunto.desocuparConjuntos( lista1 );
 			servicoConjunto.ocuparConjuntos( lista , empresa );
 
-			request.setAttribute( "empresa" , empresa );
-			request.setAttribute( "controle" , controle );
-			request.setAttribute( "lista" , lista );			
+			RequestDispatcher dispatcher = request.getRequestDispatcher( "ConsultarEmpresa.do" );
+			dispatcher.forward( request , response );
 			
-			dispatcher = request.getRequestDispatcher( "redirecionamento.jsp" );
-			dispatcher.forward( request , response );
-
 		}
-		catch( SQLException sql )
+		catch( SQLException e )
 		{
-			dispatcher = request.getRequestDispatcher( "erro.jsp" );
-			dispatcher.forward( request , response );
-
+			e.printStackTrace( );
+			throw new IOException( e );
 		}
+
 	
 	}
 
 }
-		

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Nova empresa</title>
+</head>
+<body>
+<a href = "index.html" >Home</a><br>
+<a href = "#" >Cadastrar Empresa </a><br>
+<a href = "ConsultarEmpresa.do" > Consultar Empresa </a>
+
+<h1>Cadastrar nova empresa</h1>
+
+<form action = "ManterEmpresa.do" method = "post" >
+	
+	CNPJ: <input type = "text" name = "cnpj" required maxlength="14"/><br>
+	
+	Razão Social: <input type = "text" name = "razao" required /><br>
+	
+	Endereço: <input type = "text" name = "endereco" required /><br>
+	
+	Telefone: <input type = "text" name = "fone" required /><br>
+	
+	Horário de Funcionameto: <input type = "time" name = "horarioInicial" required /> às <input type = "time" name = "horarioFinal" required/><br>
+	
+	Funcionamento do Ar Condicionado: <input type = "time" name = "arHorarioInicial" required/> às <input type = "time" name = "arHorarioFinal" required /><br>
+	
+	Temperatura máxima do Ar Condicionado: <input type = "number" name = "temperatura"  min = "0" max = "40"/><br>
+
+		
+	<input type = "submit" name = "OPCAO" value = "Prosseguir"/>
+	<input type = "reset" value = "Limpar" /> 
+	
+</form> 
+</body>
+</html>

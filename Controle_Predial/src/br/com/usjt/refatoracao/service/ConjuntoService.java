@@ -18,6 +18,19 @@ public class ConjuntoService
 	}
 	
 	/**
+	 *Responsavel por mostrar todos os conjuntos pertecentes a alguma empresa
+	 *@param empresa
+	 *@return conjuntos
+	 * @throws SQLException 
+	 */
+	public Conjunto consultarConjuntoOcupado( Empresa empresa ) throws SQLException
+	{
+		ConjuntoDAO dao = new ConjuntoDAO( );
+		return dao.consultarConjuntoOcupado( empresa );
+	}
+	
+	
+	/**
 	 *Metodo responsavel por trazer todos conjuntos desocupados
 	 * @throws SQLException 
 	 */
@@ -45,15 +58,7 @@ public class ConjuntoService
      ConjuntoDAO dao = new ConjuntoDAO( );
      return dao.desocuparConjuntos( conjuntos );
   }
-
-  public boolean desocuparConjuntos( String cnpj  ) throws SQLException
-  {
-     ConjuntoDAO dao = new ConjuntoDAO( );
-     return dao.desocuparConjuntos( cnpj );
-  }
-  
-  
-  
+   
 	/**
 	 *Responsavel por mostrar todos os conjuntos pertecentes a alguma empresa
 	 *@param empresa
@@ -65,16 +70,5 @@ public class ConjuntoService
 	   ConjuntoDAO dao = new ConjuntoDAO( );
 	   return dao.consultarConjuntoOcupado( empresa );
    }
-	
-	/**
-	 *Responsavel por mostrar todos os conjuntos pertecentes a alguma empresa
-	 *@param empresa
-	 *@return conjuntos
-	 * @throws SQLException 
-	 */
-	public Conjunto consultarConjuntoOcupado( Empresa empresa ) throws SQLException
-	{
-		ConjuntoDAO dao = new ConjuntoDAO( );
-		return dao.consultarConjuntoOcupado( empresa );
-	}
+
 }//Fim da classe
