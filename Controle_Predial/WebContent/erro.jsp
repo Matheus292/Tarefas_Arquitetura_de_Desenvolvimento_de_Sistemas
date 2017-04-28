@@ -5,16 +5,27 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Erro</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 <body>
 	<%@ include file="menu.jsp"%>
 
-			<h3>Não foi possivel realizar a
+	<div id="main" class="container">
+		<div id="borda">
+			<h3 id="h1" class="page-header">Não foi possivel realizar a
 				operação! <br> Verifique os dados </h3>
 				
 			<a href="javascript:history.go(-1);"> <input type="button"
-				value="Voltar" />
+			class="btn btn-default"	value="Voltar" />
 			</a>
+
+		</div>
+	</div>
+
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
 </body>
 </html>

@@ -9,11 +9,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Página Inicial</title>
+<link rel="icon" href="./imagens/icone.ico">
+<link href="css/estilo.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 
-<body>
+<body id = "corpo" >
 	<%@ include file="menu.jsp"%>
-				<h1>Sistema de Controle Predial</h1>
+
+
+	<div id="main" class="container">
+		<div id = "borda" >
+				<h1 id = "h1" class="page-header">Sistema de Controle Predial</h1>
+		</div>
+	
+
+	</div>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -13,12 +13,12 @@
 <% Empresa empresa = ( Empresa )request.getAttribute( "empresa" ); %>
 
 <script type="text/javascript">
-window.setTimeout( redirecionar( ) , 3000 );
+window.setTimeout( alert( "Operação realizada com sucesso !" ) , redirecionar( ) , 3000 );
 
 
 function redirecionar(  )
 {	
-		window.location.href = "ManterEmpresa"+".do"+"?opcao=Consultar&id=" + <%=empresa.getCnpj( )%>;
+	window.location.href = "ManterEmpresa"+".do"+"?opcao=Consultar&id=" + <%=empresa.getCnpj( )%>;
 }
 </script>
 </head>

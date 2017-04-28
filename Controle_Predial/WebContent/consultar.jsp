@@ -10,19 +10,25 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Consultar</title>
+<link rel="icon" href="./imagens/icone.ico">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
 </head>
 <body>
-
 	<%@ include file="menu.jsp"%>
+	<%@include file="exclusao.jsp"%>
+	<div id="main" class="container">
 
-		<h1>Empresas Cadastradas</h1>
+		<h1 class="page-header">Empresas Cadastradas</h1>
 
 
 		<%
 			EmpresaService empresaService = new EmpresaService();
 			List<Empresa> lista = empresaService.consultar();
 		%>
-		<table>
+		<table class="table table-striped">
 			<thead>
 				<tr>
 
@@ -49,18 +55,21 @@
 				<td><%=empresa.getEndereco()%></td>
 				<td><%=empresa.getHorarioAbertura()%></td>
 				<td><%=empresa.getHorarioFechamento()%></td>
-				<td>
-				
-				<a 	href="ManterEmpresa.do?opcao=Consultar&id=<%=empresa.getCnpj()%>">
-						<button title="Consultar">Consultar</button>
+				<td><a type="button"
+					href="ManterEmpresa.do?opcao=Consultar&id=<%=empresa.getCnpj()%>">
+						<button class="glyphicon glyphicon-book + btn btn-info"
+							title="Consultar"></button>
 				</a> 
-					
-				<a href="excluir.jsp?id=<%=empresa.getCnpj()%>" >
-						<button  title="Excluir"> Excluir </button>
-				</a>
+
+					<button id="<%=empresa.getCnpj()%>" type="button"
+						class="glyphicon glyphicon-trash + btn btn-danger" title="Excluir"
+						data-toggle="modal" data-target="#delete-modal"		data-cliente="<%=empresa.getCnpj()%>">
 						
-						<a href="alterar.jsp?id=<%=empresa.getCnpj()%>">
-						<button title="Alterar Empresa"> Alterar Empresa </button>
+						</button> 
+						
+						<a	type="button" href="alterar.jsp?id=<%=empresa.getCnpj()%>">
+						<button class="glyphicon glyphicon-pencil + btn btn-warning"
+							title="Alterar Empresa"></button>
 				</a>
 				
 				</td>
@@ -70,5 +79,16 @@
 			%>
 
 		</table>
+
+		<script type="text/javascript">
+			$("#delete-modal").on('show.bs.modal', function(event) {
+				var button = $(event.relatedTarget); //botao que disparou a modal
+				var recipient = button.data('cliente');
+				$("#id_excluir").val(recipient);
+			});
+		</script>
+
+
+	</div>
 </body>
 </html>

@@ -12,50 +12,117 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
  
 <title>Nova empresa</title>
+<link rel="icon" href="./imagens/icone.ico">
+<link href="css/estilo.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.js"></script>
+
+
+
+
 
 </head>
 
 <body>
 	<%@ include file="menu.jsp"%>
 
-
-		<h1>Cadastrar nova empresa</h1>
+	<div id="main" class="container">
+		<h1 class="page-header">Cadastrar nova empresa</h1>
 
 		<form id="formulario" action="ManterEmpresa.do" method="post">
 
-					<label>CNPJ:</label> <input type="text" 
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label>CNPJ:</label> <input type="text" class="form-control" id = "fonte"
 						name="cnpj" maxlength="14" required
 						placeholder="CNPJ no formato xx.xxx.xxx/xxxx-xx" /><br>
+				</div>
+			</div>
 
-					<label>Razão Social:</label> <input type="text" name="razao" 
-					 required placeholder="Insira a razão social" /><br>
+
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label>Razão Social:</label> <input type="text" name="razao" id = "fonte"
+						class="form-control" required placeholder="Insira a razão social" /><br>
+
+				</div>
+			</div>
 
 
-					<label>Endereço:</label> <input type="text" name="endereco" 
-						 required placeholder="Insira o endereço" /><br>
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label>Endereço:</label> <input type="text" name="endereco" id = "fonte"
+						class="form-control" required placeholder="Insira o endereço" /><br>
+				</div>
+			</div>
+
 	
-					<label>Telefone:</label> <input type="text" name="fone" required 
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label>Telefone:</label> <input type="text" name="fone" required id = "fonte"
+						class="form-control"
 						placeholder="Telefone com ddd no formato (99) 9999-9999" /><br>
-				
+				</div>
+			</div>
+
+
+
+			<div class="row">
+				<div class="form-group col-md-12">
 					<label>Horário de Funcionameto:</label>
-			
+				</div>
+			</div>
 
-					<input type="time" name="horarioInicial" required /> <label>às</label>
-					<input type="time" name="horarioFinal" required  /><br>
-				
+
+			<div class="row">
+				<div class="form-group col-md-12">
+					<input type="time" name="horarioInicial" required id = "fonte" /> <label>às</label>
+					<input type="time" name="horarioFinal" required id = "fonte" /><br>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-md-12">
 					<label>Funcionamento do Ar Condicionado:</label>
-				
+				</div>
+			</div>
 
-					<input type="time" name="arHorarioInicial" required /> <label>às</label>
-					<input type="time" name="arHorarioFinal" required /><br>
 
+			<div class="row">
+				<div class="form-group col-md-12">
+					<input type="time" name="arHorarioInicial" required id = "fonte"/> <label>às</label>
+					<input type="time" name="arHorarioFinal" required id = "fonte"/><br>
+
+				</div>
+			</div>
+
+
+
+			<div class="row">
+				<div class="form-group col-md-8">
 					<label>Temperatura máxima do Ar Condicionado:</label> 
+				</div>
+			</div>
 
+
+				<div class="row">
+				<div class="form-group col-md-8">
 					<input
-						type="number" name="temperatura" min="0" max="40" required/><br>
-				
+						type="number" name="temperatura" min="0" max="40" id = "fonte" required/><br>
+				</div>
+			</div>
+	
+
+			<div class="row">
+				<div class="form-group col-md-6">
 					<label>Conjuntos Dísponiveis:</label>
-				
+				</div>
+			</div>
+
+
+	<div class="row">
+				<div class="form-group col-md-6">
 					<%
 						ConjuntoService servico = new ConjuntoService();
 						List<Conjunto> lista = servico.consultarConjuntoDesocupado();
@@ -67,10 +134,15 @@
 					<%
 						}
 					%>
-					<br>
-			<input type="submit" name = "opcao" value="Cadastrar"/>
+				</div>
+			</div>
+			<hr/>
+			<input type="submit" class="btn btn-success" name = "opcao" value="Cadastrar"  
+			/>
 			 <input type="reset" class="btn btn-default" value="Limpar" />
-			<br><br>
+	<br><br>
 		</form>
+	</div>
+
 </body>
 </html>
