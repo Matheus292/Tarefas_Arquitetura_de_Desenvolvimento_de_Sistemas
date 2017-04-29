@@ -24,7 +24,7 @@ public class EmpresaDAO
 	 */
 	public EmpresaDAO( )
 	{
-		
+
 	}
 
 	/**
@@ -51,8 +51,8 @@ public class EmpresaDAO
 		st = conexao.prepareStatement( sql );
 		st.setString( 1 , empresa.getCnpj( ) );
 		st.setString( 2 , empresa.getRazaoSocial( ) );
-		st.setString( 3 , empresa.getTelefone( ) );
-		st.setString( 4 , empresa.getEndereco( ) );
+		st.setString( 4 , empresa.getTelefone( ) );
+		st.setString( 3 , empresa.getEndereco( ) );
 		st.setString( 5 , empresa.getHorarioAbertura( ) );
 		st.setString( 6 , empresa.getHorarioFechamento( ) );
 		st.execute( );
@@ -73,7 +73,7 @@ public class EmpresaDAO
 	 */
 	public List<Empresa> consultar( ) throws SQLException
 	{
-		
+
 		Connection conexao = null;
 		ConnectionFactory fabricaConexao = new ConnectionFactory( );
 		PreparedStatement st = null;
@@ -82,31 +82,31 @@ public class EmpresaDAO
 
 		List<Empresa> lista = new ArrayList< >( );
 
-			conexao = fabricaConexao.obtemConexao( );
+		conexao = fabricaConexao.obtemConexao( );
 
-			st = conexao.prepareStatement( sql );
+		st = conexao.prepareStatement( sql );
 
-			rs = st.executeQuery( );
+		rs = st.executeQuery( );
 
-			while( rs.next( ) )
-			{				
-				Empresa e = new Empresa(  );
-				e.setCnpj( rs.getString( "cnpj" ) );
-				e.setRazaoSocial( rs.getString( "razaoSocial" ) );
-				e.setEndereco( rs.getString( "endereco" ) );
-				e.setTelefone( rs.getString( "telefone" ));
-				e.setHorarioAbertura( rs.getString( "horarioAbertura" ) );
-				e.setHorarioFechamento( rs.getString( "horarioFechamento" ) );
+		while( rs.next( ) )
+		{				
+			Empresa e = new Empresa(  );
+			e.setCnpj( rs.getString( "cnpj" ) );
+			e.setRazaoSocial( rs.getString( "razaoSocial" ) );
+			e.setEndereco( rs.getString( "endereco" ) );
+			e.setTelefone( rs.getString( "telefone" ));
+			e.setHorarioAbertura( rs.getString( "horarioAbertura" ) );
+			e.setHorarioFechamento( rs.getString( "horarioFechamento" ) );
 
-				lista.add( e );
-			}
-			st.close( );
-			conexao.close( );
-		
-			return lista;
+			lista.add( e );
+		}
+		st.close( );
+		conexao.close( );
+
+		return lista;
 	}
-	
-	
+
+
 	/**
 	 *Responsavel por alterar a empresa no banco de dados 
 	 *@param empresa
@@ -116,38 +116,38 @@ public class EmpresaDAO
 	{
 		Connection conexao = null;
 		ConnectionFactory fabricaConexao = new ConnectionFactory( );
-		
+
 		String sql = 
 				"update empresa set  razaoSocial = ? , telefone = ? , endereco = ? , horarioAbertura = ? "
 						+ ", horarioFechamento = ? where cnpj = ?";
 
 		PreparedStatement st = null;
 
-			conexao = fabricaConexao.obtemConexao( );
+		conexao = fabricaConexao.obtemConexao( );
 
 
-			//Força a transação
-			conexao.setAutoCommit( false );
+		//Força a transação
+		conexao.setAutoCommit( false );
 
-			st = conexao.prepareStatement( sql );
+		st = conexao.prepareStatement( sql );
 
-			st.setString( 1 ,  empresa.getRazaoSocial( ) );
-			st.setString( 2 , empresa.getTelefone( ) );
-			st.setString( 3 ,  empresa.getEndereco( ) );
-			st.setString( 4 , empresa.getHorarioAbertura( ) );
-			st.setString( 5 ,  empresa.getHorarioFechamento( ) );
-			st.setString( 6  ,  empresa.getCnpj( ) );
-			st.execute( );			
+		st.setString( 1 ,  empresa.getRazaoSocial( ) );
+		st.setString( 2 , empresa.getTelefone( ) );
+		st.setString( 3 ,  empresa.getEndereco( ) );
+		st.setString( 4 , empresa.getHorarioAbertura( ) );
+		st.setString( 5 ,  empresa.getHorarioFechamento( ) );
+		st.setString( 6  ,  empresa.getCnpj( ) );
+		st.execute( );			
 
-			//Efetiva transação
-			conexao.commit( );		
+		//Efetiva transação
+		conexao.commit( );		
 
-			st.close( );
-			conexao.close( );
+		st.close( );
+		conexao.close( );
 
-			return true;
-		}
-	
+		return true;
+	}
+
 	/**
 	 *Responsavel por excluir a empresa no banco de dados
 	 *@param empresa
@@ -161,27 +161,53 @@ public class EmpresaDAO
 		String sql = "delete from empresa where cnpj = ?";
 		PreparedStatement st = null;
 
-			conexao = fabricaConexao.obtemConexao( );
+		conexao = fabricaConexao.obtemConexao( );
 
-			//Força a transação
-			conexao.setAutoCommit( false );
+		//Força a transação
+		conexao.setAutoCommit( false );
 
-			st = conexao.prepareStatement( sql );
+		st = conexao.prepareStatement( sql );
 
-			st.setString( 1  ,  empresa.getCnpj( ) );
-			st.execute( );			
+		st.setString( 1  ,  empresa.getCnpj( ) );
+		st.execute( );			
 
-			//Efetiva transação
-			conexao.commit( );		
+		//Efetiva transação
+		conexao.commit( );		
 
-			st.close( );
-			conexao.close( );
+		st.close( );
+		conexao.close( );
 
-			return true;
-		
+		return true;
+
 	}
-	
-	
+
+	public boolean excluirPorCnpj( String cnpj ) throws SQLException
+	{
+		Connection conexao = null;
+		ConnectionFactory fabricaConexao =  new ConnectionFactory( );
+		String sql = "delete from empresa where cnpj = ?";
+		PreparedStatement st = null;
+
+		conexao = fabricaConexao.obtemConexao( );
+
+		//Força a transação
+		conexao.setAutoCommit( false );
+
+		st = conexao.prepareStatement( sql );
+
+		st.setString( 1  ,  cnpj );
+		st.execute( );			
+
+		//Efetiva transação
+		conexao.commit( );		
+
+		st.close( );
+		conexao.close( );
+
+		return true;
+
+	}
+
 	public Empresa consultar( String cnpj) throws SQLException
 	{
 
@@ -220,6 +246,5 @@ public class EmpresaDAO
 		return e;
 	}
 
-	
 
 }//Fim da classe

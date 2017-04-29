@@ -26,44 +26,6 @@ public class ConjuntoDAO
 
 	}
 
-	/**
-	 *Responsavel por mostrar todos os conjuntos pertecentes a alguma empresa
-	 *@param empresa
-	 *@return conjuntos
-	 * @throws SQLException 
-	 */
-	public Conjunto consultarConjuntoOcupado( Empresa empresa ) throws SQLException
-	{
-		PreparedStatement st = null;
-		ResultSet rs = null;
-
-		Conjunto conjunto = new Conjunto( );
-
-		ConnectionFactory fabricaConexao = new ConnectionFactory( );
-		Connection conexao = null;
-		
-
-			String sql = "select * from conjunto where Empresa_cnpj = ? ";
-			conexao = fabricaConexao.obtemConexao( );
-			
-			st = conexao.prepareStatement( sql );
-			st.setString( 1 , empresa.getCnpj( ) );
-			
-			rs = st.executeQuery( );
-
-			if( rs.next( ) )
-			{
-				conjunto.setId( rs.getInt( 1 ) );
-				conjunto.setDisponibilidade( rs.getBoolean( 2 ) );
-			}
-
-				st.close( );
-				conexao.close( );
-
-		return conjunto;
-	}
-
-	
 	
 	/**
 	 *Metodo por retornar todos os Conjuntos desocupados
@@ -194,8 +156,8 @@ public class ConjuntoDAO
 			while( rs.next( ) )
 			{
 				Conjunto c = new Conjunto( );
-				c.setId( rs.getInt( 0 ) );
-				c.setDisponibilidade( rs.getBoolean( 1 ) );
+				c.setId( rs.getInt( 1 ) );
+				c.setDisponibilidade( rs.getBoolean( 2 ) );
 				lista.add( c );
 			}
 			conjuntos.add( lista );
@@ -206,4 +168,70 @@ public class ConjuntoDAO
 
 		return conjuntos;
 	}
+
+	/**
+	 *Responsavel por mostrar todos os conjuntos pertecentes a alguma empresa
+	 *@param empresa
+	 *@return conjuntos
+	 * @throws SQLException 
+	 */
+	public Conjunto consultarConjuntoOcupado( Empresa empresa ) throws SQLException
+	{
+		PreparedStatement st = null;
+		ResultSet rs = null;
+
+		Conjunto conjunto = new Conjunto( );
+
+		ConnectionFactory fabricaConexao = new ConnectionFactory( );
+		Connection conexao = null;
+		
+
+			String sql = "select * from conjunto where Empresa_cnpj = ? ";
+			conexao = fabricaConexao.obtemConexao( );
+			
+			st = conexao.prepareStatement( sql );
+			st.setString( 1 , empresa.getCnpj( ) );
+			
+			rs = st.executeQuery( );
+
+			if( rs.next( ) )
+			{
+				conjunto.setId( rs.getInt( 1 ) );
+				conjunto.setDisponibilidade( rs.getBoolean( 2 ) );
+			}
+
+				st.close( );
+				conexao.close( );
+
+		return conjunto;
+	}
+
+	
+	
+	/**
+	 *Metodo responsavel por alterar os dados do conjunto no banco de dados usando o cnpj da empresa
+	 *@param conjuntos 
+	 * @throws SQLException
+	 * @return true,false 
+	 */
+   public boolean desocuparConjuntos( String cnpj ) throws SQLException
+   {
+      Connection conexao = null;
+      PreparedStatement st = null;
+      ConnectionFactory fabricaConexao = new ConnectionFactory( );
+   
+   	
+      String sql = "update Conjunto  set Empresa_cnpj = null , disponibilidade = true where Empresa_cnpj= ?";
+      conexao = fabricaConexao.obtemConexao( );
+   
+      st = conexao.prepareStatement( sql );
+      st.setString( 1 , cnpj );
+      st.execute( );		  
+   		
+   
+      st.close( );
+      conexao.close( );
+   	
+      return true;
+   }
 }//Fim da classe
